@@ -1,0 +1,14 @@
+#!/bin/bash
+
+set -e
+
+# Define image name and timeout (in seconds)
+IMAGE_NAME="latex-compiler"
+TIMEOUT=60
+
+# Run pdflatex inside container with timeout
+exec timeout $TIMEOUT podman run --rm \
+  -v "$(pwd)":/latex \
+  -w /latex \
+  "$IMAGE_NAME" \
+  pdflatex "$@"

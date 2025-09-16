@@ -37,15 +37,10 @@ RUN tlmgr init-local || echo "tlmgr not available, using system packages"
 # Set working directory
 WORKDIR /latex
 
-# Copy your resume file (when building with a specific file)
-# COPY resume.tex /latex/
+COPY compiler.py /latex/
 
 # Create a volume mount point for LaTeX files
 VOLUME ["/latex"]
 
-# Default command to compile LaTeX
-# Users can override this when running the container
-CMD ["bash", "-c", "if [ -f *.tex ]; then pdflatex *.tex; else echo 'No .tex files found. Please mount your LaTeX files to /latex'; fi"]
-
-# Alternative: You can also provide a more interactive bash shell
-# CMD ["/bin/bash"]
+# Default command to run the compiler server
+CMD ["python3", "compiler.py"]
